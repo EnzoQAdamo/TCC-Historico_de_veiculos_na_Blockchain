@@ -1,0 +1,19 @@
+node_modules
+.env
+
+# Hardhat files
+Contrato Inteligente/cache
+Contrato Inteligente/artifacts
+
+# TypeChain files
+Contrato Inteligente/typechain
+Contrato Inteligente/typechain-types
+
+# solidity-coverage files
+Contrato Inteligente/coverage
+Contrato Inteligente/coverage.json
+
+# Hardhat Ignition default folder for deployments against a local node
+ignition/deployments/chain-31337
+
+Temp
