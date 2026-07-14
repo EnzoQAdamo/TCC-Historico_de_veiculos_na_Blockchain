@@ -25,14 +25,14 @@ export interface MaintenanceRecord {
   description: string;
   workshop: string;
   cost: number;
-  type: 'preventive' | 'corrective' | 'recall';
+  type: 'preventive' | 'corrective' | 'recall' | 'sinistro' | 'revisao' | 'outros';
   status: 'completed' | 'pending';
   invoiceNumber?: string;
 }
 
 export interface OfficialReport {
   id: string;
-  type: 'accident' | 'theft' | 'robbery' | 'flood' | 'fire';
+  type: 'accident' | 'theft' | 'robbery' | 'flood' | 'fire' | 'auction' | 'salvage' | 'title';
   date: string;
   description: string;
   location: string;
@@ -68,6 +68,7 @@ export interface VehicleHistory {
   
   // Seção 2: Histórico de manutenções
   maintenanceRecords: MaintenanceRecord[];
+  recalls: MaintenanceRecord[];
   
   // Seção 3: Relatórios oficiais e débitos
   officialReports: OfficialReport[];
@@ -77,6 +78,8 @@ export interface VehicleHistory {
   owners: number;
   mileage: number;
   riskScore: number;
+  riskFactors: string[];
+  isHighMileage: boolean;
   lastUpdate: string;
 }
 

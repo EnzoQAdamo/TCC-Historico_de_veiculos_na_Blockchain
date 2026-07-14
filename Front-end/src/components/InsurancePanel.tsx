@@ -1,232 +1,169 @@
 import React, { useState } from 'react';
-import { Search, BarChart3, Users, AlertTriangle, Wrench, Calendar } from 'lucide-react';
-import { vehicleHistories, recentSearches } from '../data/mockData';
+import { Search, BarChart3, Users, AlertTriangle, Wrench, Calendar, ShieldCheck, Loader2, CheckCircle2, Download } from 'lucide-react';
 import { VehicleHistory } from '../types';
 import VehicleHistoryDetails from './VehicleHistoryDetails';
+import { getHistoricoCompleto } from '../services/db';
+import { generatePDF } from '../utils/pdfGenerator';
+import { useToast } from '../context/ToastContext';
 
 const InsurancePanel: React.FC = () => {
+  const { toast } = useToast();
   const [searchQuery, setSearchQuery] = useState('');
   const [isSearching, setIsSearching] = useState(false);
   const [searchResult, setSearchResult] = useState<VehicleHistory | null>(null);
 
   const handleSearch = async () => {
     if (!searchQuery.trim()) return;
-    
     setIsSearching(true);
-    
-    // Simula busca
-    setTimeout(() => {
-      const query = searchQuery.toLowerCase();
-      const found = vehicleHistories.find(v => 
-        v.chassis.toLowerCase().includes(query) ||
-        v.plate.toLowerCase().includes(query)
-      );
-      setSearchResult(found || null);
+    try {
+      const history = await getHistoricoCompleto(searchQuery.toUpperCase());
+      setSearchResult(history);
+    } catch (error: any) {
+      setSearchResult(null);
+      toast('error', error.message || 'Chassi não encontrado.');
+    } finally {
       setIsSearching(false);
-    }, 1500);
+    }
   };
 
-  const getRiskScoreColor = (score: number) => {
-    if (score >= 80) return 'text-green-600 bg-green-50';
-    if (score >= 60) return 'text-yellow-600 bg-yellow-50';
-    return 'text-red-600 bg-red-50';
-  };
-
-  const getRiskLevel = (score: number) => {
-    if (score >= 80) return 'Baixo Risco';
-    if (score >= 60) return 'Risco Moderado';
-    return 'Alto Risco';
+  const getScoreInfo = (score: number) => {
+    if (score >= 80) return { label: 'Excelente', color: 'text-green-600', bg: 'bg-green-50', bar: 'bg-green-500' };
+    if (score >= 50) return { label: 'Regular', color: 'text-yellow-600', bg: 'bg-yellow-50', bar: 'bg-yellow-500' };
+    return { label: 'Crítico', color: 'text-red-600', bg: 'bg-red-50', bar: 'bg-red-500' };
   };
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-      {/* Header */}
-      <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+      <div className="mb-10">
+        <h1 className="text-3xl font-black text-gray-900 mb-2 tracking-tight flex items-center gap-3">
+          <ShieldCheck className="w-10 h-10 text-indigo-600" />
           Painel da Seguradora
         </h1>
-        <p className="text-gray-600">
-          Análise de risco e histórico completo de veículos
-        </p>
+        <p className="text-gray-500 font-medium">Análise de risco avançada com score de confiabilidade auditado.</p>
       </div>
 
-      {/* Search Section */}
-      <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Consultar Histórico por Placa ou Chassi
-        </h2>
-        <div className="flex gap-4">
-          <div className="flex-1">
+      <div className="bg-white rounded-[32px] shadow-xl border border-gray-100 p-8 mb-10">
+        <h2 className="text-xl font-black text-gray-900 mb-4">Análise On-Chain por Chassi</h2>
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="flex-1 relative">
+            <Search className="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-gray-300" />
             <input
               type="text"
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              placeholder="Digite a placa (ABC1234) ou número do chassi para análise completa..."
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              placeholder="Digite o número do chassi para análise completa..."
+              className="w-full pl-14 pr-6 py-4 bg-gray-50 border border-gray-200 rounded-2xl focus:ring-2 focus:ring-indigo-500 outline-none font-medium transition-all"
               onKeyPress={(e) => e.key === 'Enter' && handleSearch()}
             />
           </div>
           <button
             onClick={handleSearch}
             disabled={isSearching}
-            className="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+            className="px-10 py-4 bg-indigo-600 text-white font-black rounded-2xl hover:bg-indigo-700 transition-all active:scale-95 disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {isSearching ? (
-              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent"></div>
-            ) : (
-              <Search className="h-4 w-4" />
-            )}
-            {isSearching ? 'Analisando...' : 'Analisar'}
+            {isSearching ? <Loader2 className="w-5 h-5 animate-spin" /> : <BarChart3 className="w-5 h-5" />}
+            {isSearching ? 'ANALISANDO...' : 'INICIAR ANÁLISE'}
           </button>
         </div>
       </div>
 
-      {/* Search Result */}
       {searchResult && (
-        <div className="mb-8">
-          <div className="bg-white rounded-lg shadow-md p-6 mb-8">
-            <div className="mb-6">
-              <h3 className="text-xl font-semibold text-gray-900 mb-2">
-                {searchResult.brand} {searchResult.model}
-              </h3>
-              <p className="text-gray-600">Placa: {searchResult.plate}</p>
-              <p className="text-gray-600 font-mono text-sm">Chassi: {searchResult.chassis}</p>
-            </div>
-
-            {/* Risk Score */}
-            <div className="mb-6">
-              <div className="flex items-center justify-between mb-3">
-                <h4 className="text-lg font-medium text-gray-900">Score de Risco</h4>
-                <div className={`px-4 py-2 rounded-full text-sm font-medium ${getRiskScoreColor(searchResult.riskScore)}`}>
-                  {searchResult.riskScore}/100 - {getRiskLevel(searchResult.riskScore)}
+        <div className="space-y-8 animate-in fade-in duration-500">
+          <div className="bg-white rounded-[32px] shadow-2xl border border-gray-100 overflow-hidden">
+            <div className="p-8 border-b border-gray-50 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+              <div>
+                <div className="flex items-center gap-3 mb-1">
+                  <h3 className="text-2xl font-black text-gray-900 tracking-tight">
+                    {searchResult.brand} {searchResult.model}
+                  </h3>
+                  {searchResult.isHighMileage && (
+                    <span className="px-3 py-1 bg-amber-100 text-amber-700 text-[10px] font-black uppercase rounded-full border border-amber-200 flex items-center gap-1">
+                      <AlertTriangle className="w-3 h-3" /> Uso Intenso
+                    </span>
+                  )}
                 </div>
-              </div>
-              <div className="w-full bg-gray-200 rounded-full h-3">
-                <div 
-                  className={`h-3 rounded-full ${
-                    searchResult.riskScore >= 80 ? 'bg-green-600' :
-                    searchResult.riskScore >= 60 ? 'bg-yellow-600' : 'bg-red-600'
-                  }`}
-                  style={{ width: `${searchResult.riskScore}%` }}
-                ></div>
-              </div>
-            </div>
-
-            {/* Data Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-6">
-              <div className="bg-blue-50 p-4 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Users className="h-8 w-8 text-blue-600" />
-                  <div>
-                    <p className="text-sm text-blue-600 font-medium">Proprietários</p>
-                    <p className="text-2xl font-bold text-blue-900">{searchResult.owners}</p>
-                  </div>
+                <div className="flex items-center gap-4 text-sm font-bold text-gray-400">
+                  <span className="flex items-center gap-1"><CheckCircle2 className="w-4 h-4" /> {searchResult.plate}</span>
+                  <span className="flex items-center gap-1 font-mono">{searchResult.chassis}</span>
                 </div>
               </div>
 
-              <div className="bg-red-50 p-4 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <AlertTriangle className="h-8 w-8 text-red-600" />
-                  <div>
-                    <p className="text-sm text-red-600 font-medium">Relatórios</p>
-                    <p className="text-2xl font-bold text-red-900">{searchResult.officialReports.length}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-green-50 p-4 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <Wrench className="h-8 w-8 text-green-600" />
-                  <div>
-                    <p className="text-sm text-green-600 font-medium">Manutenções</p>
-                    <p className="text-2xl font-bold text-green-900">{searchResult.maintenanceRecords.length}</p>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-purple-50 p-4 rounded-lg">
-                <div className="flex items-center gap-3">
-                  <BarChart3 className="h-8 w-8 text-purple-600" />
-                  <div>
-                    <p className="text-sm text-purple-600 font-medium">Quilometragem</p>
-                    <p className="text-2xl font-bold text-purple-900">
-                      {searchResult.mileage.toLocaleString('pt-BR')}
-                    </p>
-                  </div>
+              <div className="flex items-center gap-4">
+                <button
+                  onClick={() => generatePDF(searchResult, 'insurance')}
+                  className="flex items-center gap-2 px-6 py-2 bg-gray-900 text-white rounded-xl font-bold hover:bg-black transition-all"
+                >
+                  <Download className="w-4 h-4" /> EXPORTAR PDF
+                </button>
+                <div className="flex items-center gap-2 text-sm font-black text-gray-400 bg-gray-50 px-4 py-2 rounded-full uppercase tracking-widest">
+                  <Calendar className="h-4 w-4" /> {new Date(searchResult.lastUpdate).toLocaleDateString('pt-BR')}
                 </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-2 text-sm text-gray-600">
-              <Calendar className="h-4 w-4" />
-              Última atualização: {new Date(searchResult.lastUpdate).toLocaleDateString('pt-BR')}
+            <div className="p-8 grid grid-cols-1 lg:grid-cols-12 gap-10">
+              <div className="lg:col-span-5 flex flex-col items-center justify-center p-10 bg-gray-50 rounded-[40px] border border-gray-100 relative overflow-hidden">
+                <div className="relative z-10 flex flex-col items-center">
+                  <div className="text-[10px] font-black text-gray-400 uppercase tracking-[0.2em] mb-2">Score de Procedência Registro Veicular</div>
+                  <div className={`text-8xl font-black tracking-tighter ${getScoreInfo(searchResult.riskScore).color}`}>
+                    {searchResult.riskScore}
+                  </div>
+                  <div className={`mt-2 px-6 py-1.5 rounded-full text-xs font-black uppercase tracking-widest ${getScoreInfo(searchResult.riskScore).bg} ${getScoreInfo(searchResult.riskScore).color}`}>
+                    Nível {getScoreInfo(searchResult.riskScore).label}
+                  </div>
+                </div>
+                <div className={`absolute -bottom-10 -right-10 w-40 h-40 rounded-full opacity-10 ${getScoreInfo(searchResult.riskScore).bar}`}></div>
+              </div>
+
+              <div className="lg:col-span-7 space-y-6">
+                <h4 className="text-xs font-black text-gray-400 uppercase tracking-[0.15em]">Motivos da Nota</h4>
+                <div className="space-y-3">
+                  {searchResult.riskFactors.length > 0 ? (
+                    searchResult.riskFactors.map((factor, i) => (
+                      <div key={i} className="flex items-center gap-3 p-4 bg-white border border-red-50 rounded-2xl shadow-sm">
+                        <div className="p-2 bg-red-50 rounded-lg">
+                          <AlertTriangle className="w-5 h-5 text-red-500" />
+                        </div>
+                        <span className="font-bold text-gray-700">{factor}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="flex items-center gap-4 p-6 bg-green-50/50 border border-green-100 rounded-[24px]">
+                      <div className="p-3 bg-green-100 rounded-full">
+                        <ShieldCheck className="w-6 h-6 text-green-600" />
+                      </div>
+                      <div>
+                        <div className="font-black text-green-700 leading-tight">Histórico Impecável</div>
+                        <div className="text-xs font-medium text-green-600/80">Nenhuma irregularidade auditada na blockchain.</div>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 pt-4">
+                  <div className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                    <div className="text-[9px] font-black text-gray-400 uppercase mb-1">Donos</div>
+                    <div className="text-xl font-black text-gray-900">{searchResult.owners}</div>
+                  </div>
+                  <div className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                    <div className="text-[9px] font-black text-gray-400 uppercase mb-1">Sinistros</div>
+                    <div className="text-xl font-black text-red-500">{searchResult.officialReports.length}</div>
+                  </div>
+                  <div className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                    <div className="text-[9px] font-black text-gray-400 uppercase mb-1">Serviços</div>
+                    <div className="text-xl font-black text-green-600">{searchResult.maintenanceRecords.length}</div>
+                  </div>
+                  <div className="p-4 bg-white border border-gray-100 rounded-2xl shadow-sm">
+                    <div className="text-[9px] font-black text-gray-400 uppercase mb-1">Km Total</div>
+                    <div className="text-xl font-black text-gray-900">{Math.floor(searchResult.mileage).toLocaleString('pt-BR')}</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
-          
-          {/* Detailed History */}
           <VehicleHistoryDetails vehicleHistory={searchResult} />
         </div>
       )}
-
-      {/* Recent Searches */}
-      <div className="bg-white rounded-lg shadow-md p-6">
-        <h2 className="text-xl font-semibold text-gray-900 mb-4">
-          Consultas Recentes
-        </h2>
-        <div className="overflow-x-auto">
-          <table className="min-w-full divide-y divide-gray-200">
-            <thead className="bg-gray-50">
-              <tr>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Chassi
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Data
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Origem
-                </th>
-                <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Ações
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {recentSearches.slice(0, 5).map((search, index) => (
-                <tr key={index} className="hover:bg-gray-50">
-                  <td className="px-6 py-4 whitespace-nowrap text-sm font-mono text-gray-900">
-                    {search.query}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    {new Date(search.date).toLocaleDateString('pt-BR')}
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap">
-                    <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                      search.type === 'insurance' ? 'bg-blue-100 text-blue-800' :
-                      search.type === 'dealer' ? 'bg-green-100 text-green-800' :
-                      'bg-yellow-100 text-yellow-800'
-                    }`}>
-                      {search.type === 'insurance' ? 'Seguradora' :
-                       search.type === 'dealer' ? 'Concessionária' : 'Oficina'}
-                    </span>
-                  </td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                    <button 
-                      onClick={() => {
-                        setSearchQuery(search.query);
-                        handleSearch();
-                      }}
-                      className="text-blue-600 hover:text-blue-800"
-                    >
-                      Consultar novamente
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      </div>
     </div>
   );
 };

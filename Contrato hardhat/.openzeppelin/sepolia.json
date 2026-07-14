@@ -1,0 +1,827 @@
+{
+  "manifestVersion": "3.2",
+  "proxies": [
+    {
+      "address": "0xB35dc17cDEe033284eC1ea48A721F5808B7C09F6",
+      "txHash": "0x289d1fc1f80bdc4b662f6ac7887b8ce358751d80f17f7d1d553e66f3a0a1682d",
+      "kind": "uups"
+    },
+    {
+      "address": "0xA6f280215d40b3674fCaCbB844fDE59B87A3bBF1",
+      "txHash": "0xfc4ec035d18c82c2aed2816deaa77b17c1da54b561dd63c7301c2c045db85c31",
+      "kind": "uups"
+    }
+  ],
+  "impls": {
+    "9a9093c8c3b61aab146b87da9289b04f1c73245682e161c9166ef6c1f0ad11dd": {
+      "address": "0x82D57027844ACA32Ee720e3fb490490F5A67d2b0",
+      "txHash": "0xad5e2decd98496e44ade8982abee31d9fa0a8a576b13f824e3514b314d50909d",
+      "layout": {
+        "solcVersion": "0.8.28",
+        "storage": [
+          {
+            "label": "atores",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(Ator)2101_storage)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:46"
+          },
+          {
+            "label": "enderecosAtores",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:47"
+          },
+          {
+            "label": "_atorIndex",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:48"
+          },
+          {
+            "label": "_modeloMontadora",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:50"
+          },
+          {
+            "label": "proximoIdModelo",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:51"
+          },
+          {
+            "label": "_veiculos",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_bytes32,t_struct(VeiculoInfo)2108_storage)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:53"
+          },
+          {
+            "label": "_ultimaKm",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_bytes32,t_uint32)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:54"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)34_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)370_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)24_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_enum(PapelAtor)2058": {
+            "label": "enum RegistroVeicular.PapelAtor",
+            "members": [
+              "MONTADORA",
+              "AUTORIDADE",
+              "OFICINA",
+              "SEGURADORA",
+              "CONCESSIONARIA"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(Ator)2101_storage)": {
+            "label": "mapping(address => struct RegistroVeicular.Ator)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(VeiculoInfo)2108_storage)": {
+            "label": "mapping(bytes32 => struct RegistroVeicular.VeiculoInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint32)": {
+            "label": "mapping(bytes32 => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Ator)2101_storage": {
+            "label": "struct RegistroVeicular.Ator",
+            "members": [
+              {
+                "label": "nome",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "papel",
+                "type": "t_enum(PapelAtor)2058",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "ativo",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(VeiculoInfo)2108_storage": {
+            "label": "struct RegistroVeicular.VeiculoInfo",
+            "members": [
+              {
+                "label": "assinatura_montadora",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "data_fabricacao",
+                "type": "t_uint48",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "id_modelo",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint48": {
+            "label": "uint48",
+            "numberOfBytes": "6"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "10e1f055283e905a01585e683b36f14214b1304c5e6a9fe956bd2e8329e579af": {
+      "address": "0x2b42BB93198445ddD251A44F2CDA24f1d4913776",
+      "txHash": "0xcf9986c952ff6e33b6fc263a212b3719c341f4ede525039ede3334a8f2a4bfe3",
+      "layout": {
+        "solcVersion": "0.8.28",
+        "storage": [
+          {
+            "label": "atores",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(Ator)2101_storage)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:46"
+          },
+          {
+            "label": "enderecosAtores",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:47"
+          },
+          {
+            "label": "_atorIndex",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:48"
+          },
+          {
+            "label": "_modeloMontadora",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:50"
+          },
+          {
+            "label": "proximoIdModelo",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:51"
+          },
+          {
+            "label": "_veiculos",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_bytes32,t_struct(VeiculoInfo)2108_storage)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:53"
+          },
+          {
+            "label": "_ultimaKm",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_bytes32,t_uint32)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:54"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)34_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)370_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)24_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_enum(PapelAtor)2058": {
+            "label": "enum RegistroVeicular.PapelAtor",
+            "members": [
+              "MONTADORA",
+              "AUTORIDADE",
+              "OFICINA",
+              "SEGURADORA",
+              "CONCESSIONARIA"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(Ator)2101_storage)": {
+            "label": "mapping(address => struct RegistroVeicular.Ator)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(VeiculoInfo)2108_storage)": {
+            "label": "mapping(bytes32 => struct RegistroVeicular.VeiculoInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint32)": {
+            "label": "mapping(bytes32 => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Ator)2101_storage": {
+            "label": "struct RegistroVeicular.Ator",
+            "members": [
+              {
+                "label": "nome",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "papel",
+                "type": "t_enum(PapelAtor)2058",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "ativo",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_struct(VeiculoInfo)2108_storage": {
+            "label": "struct RegistroVeicular.VeiculoInfo",
+            "members": [
+              {
+                "label": "assinatura_montadora",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "data_fabricacao",
+                "type": "t_uint48",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "id_modelo",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint48": {
+            "label": "uint48",
+            "numberOfBytes": "6"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    },
+    "43bdb839b634c2f25f5e721e5af705fcd2e715270d264dc6cfcee0b83e7432dc": {
+      "address": "0xc7560C5D4C1312Ee57234cD5EeD0Bf684eA42abE",
+      "txHash": "0xb3b19a3e6f07b6ddefb9cf609db46b00b67f446499a487047e517c76396b899c",
+      "layout": {
+        "solcVersion": "0.8.28",
+        "storage": [
+          {
+            "label": "atores",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_mapping(t_address,t_struct(Ator)2103_storage)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:47"
+          },
+          {
+            "label": "enderecosAtores",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_address)dyn_storage",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:48"
+          },
+          {
+            "label": "_atorIndex",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:49"
+          },
+          {
+            "label": "_modeloMontadora",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:51"
+          },
+          {
+            "label": "proximoIdModelo",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_uint256",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:52"
+          },
+          {
+            "label": "_veiculos",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_bytes32,t_struct(VeiculoInfo)2110_storage)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:54"
+          },
+          {
+            "label": "_ultimaKm",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_bytes32,t_uint32)",
+            "contract": "RegistroVeicular",
+            "src": "contracts/RegistroVeicular.sol:55"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_bytes32": {
+            "label": "bytes32",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(RoleData)24_storage)": {
+            "label": "mapping(bytes32 => struct AccessControlUpgradeable.RoleData)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(AccessControlStorage)34_storage": {
+            "label": "struct AccessControlUpgradeable.AccessControlStorage",
+            "members": [
+              {
+                "label": "_roles",
+                "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+                "offset": 0,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(InitializableStorage)370_storage": {
+            "label": "struct Initializable.InitializableStorage",
+            "members": [
+              {
+                "label": "_initialized",
+                "type": "t_uint64",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "_initializing",
+                "type": "t_bool",
+                "offset": 8,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_struct(RoleData)24_storage": {
+            "label": "struct AccessControlUpgradeable.RoleData",
+            "members": [
+              {
+                "label": "hasRole",
+                "type": "t_mapping(t_address,t_bool)",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "adminRole",
+                "type": "t_bytes32",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint64": {
+            "label": "uint64",
+            "numberOfBytes": "8"
+          },
+          "t_array(t_address)dyn_storage": {
+            "label": "address[]",
+            "numberOfBytes": "32"
+          },
+          "t_enum(PapelAtor)2058": {
+            "label": "enum RegistroVeicular.PapelAtor",
+            "members": [
+              "MONTADORA",
+              "AUTORIDADE",
+              "OFICINA",
+              "SEGURADORA",
+              "CONCESSIONARIA"
+            ],
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_struct(Ator)2103_storage)": {
+            "label": "mapping(address => struct RegistroVeicular.Ator)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_struct(VeiculoInfo)2110_storage)": {
+            "label": "mapping(bytes32 => struct RegistroVeicular.VeiculoInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_bytes32,t_uint32)": {
+            "label": "mapping(bytes32 => uint32)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(Ator)2103_storage": {
+            "label": "struct RegistroVeicular.Ator",
+            "members": [
+              {
+                "label": "nome",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "papel",
+                "type": "t_enum(PapelAtor)2058",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "ativo",
+                "type": "t_bool",
+                "offset": 1,
+                "slot": "1"
+              },
+              {
+                "label": "wmi",
+                "type": "t_string_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "96"
+          },
+          "t_struct(VeiculoInfo)2110_storage": {
+            "label": "struct RegistroVeicular.VeiculoInfo",
+            "members": [
+              {
+                "label": "assinatura_montadora",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "data_fabricacao",
+                "type": "t_uint48",
+                "offset": 20,
+                "slot": "0"
+              },
+              {
+                "label": "id_modelo",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              }
+            ],
+            "numberOfBytes": "64"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint32": {
+            "label": "uint32",
+            "numberOfBytes": "4"
+          },
+          "t_uint48": {
+            "label": "uint48",
+            "numberOfBytes": "6"
+          }
+        },
+        "namespaces": {
+          "erc7201:openzeppelin.storage.AccessControl": [
+            {
+              "contract": "AccessControlUpgradeable",
+              "label": "_roles",
+              "type": "t_mapping(t_bytes32,t_struct(RoleData)24_storage)",
+              "src": "@openzeppelin/contracts-upgradeable/access/AccessControlUpgradeable.sol:61",
+              "offset": 0,
+              "slot": "0"
+            }
+          ],
+          "erc7201:openzeppelin.storage.Initializable": [
+            {
+              "contract": "Initializable",
+              "label": "_initialized",
+              "type": "t_uint64",
+              "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:69",
+              "offset": 0,
+              "slot": "0"
+            },
+            {
+              "contract": "Initializable",
+              "label": "_initializing",
+              "type": "t_bool",
+              "src": "@openzeppelin/contracts/proxy/utils/Initializable.sol:73",
+              "offset": 8,
+              "slot": "0"
+            }
+          ]
+        }
+      }
+    }
+  }
+}
